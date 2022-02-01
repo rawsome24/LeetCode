@@ -1,10 +1,12 @@
 class Solution {
 public:
     int shipWithinDays(vector<int>& wei, int days) {
-        int mx = INT_MIN;
-        for(int i=0; i<wei.size(); i++)
+        int mx = INT_MIN,sum=0;
+        for(int i=0; i<wei.size(); i++){
             mx = max(wei[i],mx);
-        int low = mx, high = INT_MAX;
+            sum+=wei[i];
+        }
+        int low = mx, high = sum;
         while(low<high)
         {
             int mid = low + (high-low)/2;
