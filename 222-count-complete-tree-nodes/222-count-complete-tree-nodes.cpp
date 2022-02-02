@@ -11,17 +11,23 @@
  */
 class Solution {
 public:
-    void NodesTree(int &cnt, TreeNode* root)
+    /*void NodesTree(int &cnt, TreeNode* root)
     {
         if(root==NULL)return;
         cnt++;
         NodesTree(cnt,root->left);
         NodesTree(cnt,root->right);
-    }
+    }*/
     
     int countNodes(TreeNode* root) {
-        int cnt=0;
-        NodesTree(cnt,root);
-        return cnt;
+        int hl=0,hr=0;
+        TreeNode *curr = root;
+        if(curr==NULL)return 0;
+        while(curr){hl++; curr=curr->left;}
+        curr=root;
+        while(curr){hr++; curr=curr->right;}
+        if(hl==hr)return pow(2,hl)-1;
+        
+        return 1+countNodes(root->left)+countNodes(root->right);
     }
 };
