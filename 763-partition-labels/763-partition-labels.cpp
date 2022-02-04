@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> partitionLabels(string s) {
-        int i=0, j=s.length(),mx = INT_MIN,k=0;
+        /*int i=0, j=s.length(),mx = INT_MIN,k=0;
         unordered_set<char>set;
         vector<int>v;
         for(int i=0; i<s.length(); i++)
@@ -17,6 +17,21 @@ public:
                 mx = INT_MIN;
             }
         }
-        return v;
+        return v;*/
+        unordered_map<char,int>mp;
+        for(int i=0; i<s.length(); i++)
+            mp[s[i]]=i;
+        vector<int>res;
+        int prev=-1, mx = INT_MIN;
+        
+        for(int i=0; i<s.length(); i++)
+        {
+            mx = max(mx, mp[s[i]]);
+            if(mx==i){
+                res.push_back(mx-prev);
+                prev = mx;
+            }
+        }
+        return res;
     }
 };
