@@ -10,27 +10,24 @@
  * };
  */
 class Solution {
+    TreeNode* first=NULL;
+    TreeNode* second=NULL;
+    TreeNode* prev = NULL;
 public:
-    void inorder(TreeNode *root, vector<int>&v)
-    {
-        if(root==NULL)return;
-        inorder(root->left,v);
-        v.push_back(root->val);
-        inorder(root->right,v);
-    }
-    void fixing(TreeNode *root,vector<int>v, int &i)
-    {
-        if(root==NULL)return;
-        fixing(root->left, v, i);
-        root->val = v[i];
-        i++;
-        fixing(root->right,v, i);
-    }
     void recoverTree(TreeNode* root) {
-        vector<int>v;
-        inorder(root,v);
-        sort(v.begin(),v.end());
-        int i=0;
-        fixing(root,v,i);
+        help(root);
+        swap(first->val, second->val);
+    }
+    
+    void help(TreeNode* root){
+        if(root==NULL)  return;
+        help(root->left);
+        if(prev!=NULL && root->val<prev->val){
+            if(first==NULL)
+                first = prev;
+            second = root;
+        }
+        prev=root;
+        help(root->right);
     }
 };
