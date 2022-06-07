@@ -11,7 +11,7 @@ public:
             for(int i=first; i<m; i++)
                 ans.push_back(nums1[i]);
         }
-        if(nums1[first]==0){
+        if(first==m){
             for(int i=second; i<n; i++)
                 ans.push_back(nums2[i]);
         }
