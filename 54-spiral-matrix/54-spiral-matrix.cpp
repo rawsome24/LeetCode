@@ -1,30 +1,35 @@
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& mat) {
-        vector<int>ans;
-        int left = 0, top = 0, right = mat[0].size()-1, bot = mat.size()-1;
-        while(left<=right && top<=bot)
-        {
-            for(int i=left; i<=right; i++)
-                ans.push_back(mat[top][i]);
-            top++;
-            for(int i=top; i<=bot; i++)
-                ans.push_back(mat[i][right]);
-            right--;
-            if(top<=bot)
-            {
-                    for(int i=right; i>=left; i--)
-                    ans.push_back(mat[bot][i]); 
-                bot--;
-            }
-            if(left<=right)
-            {
-                for(int i=bot; i>=top; i--)
-                    ans.push_back(mat[i][left]);
+        vector<int>v;
+        int left=0, top=mat[0].size()-1, right=0, bottom = mat.size()-1;
+        while(left<=bottom && right<=top){
+            if(right<=top and left<=bottom){
+                for(int i=right; i<=top; i++){
+                    v.push_back(mat[left][i]);
+                }
                 left++;
             }
-            // if(left>bot || right>top)break;
+            if(left<=bottom and right<=top){
+                for(int i=left; i<=bottom; i++){
+                    v.push_back(mat[i][top]);
+                }
+                top--;
+            }
+            if(right<=top and left<=bottom){
+                for(int i=top; i>=right; i--){
+                    v.push_back(mat[bottom][i]);
+                }
+                bottom--;
+            }
+            if(left<=bottom and right<=top){
+                for(int i=bottom; i>=left; i--){
+                    v.push_back(mat[i][right]);
+                }
+                right++;
+            }
         }
-        return ans;
+        return v;
     }
+    
 };
