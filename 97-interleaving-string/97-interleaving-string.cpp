@@ -2,7 +2,7 @@ class Solution {
 public:
     int dp[101][101];
     bool solve(string s1, string s2, string s3, int i, int j, int k){
-        if(k==s3.length())
+        if(k>=s3.length() and i>=s1.length() and j>=s2.length())
             return true;
         bool case1=false ,case2=false;
         if(dp[i][j]!=-1)
