@@ -9,32 +9,32 @@
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        if(headA==NULL || headB==NULL)return NULL;
-        
-        int cnt1=0,cnt2=0;
-        ListNode *currA = headA;
-        ListNode *currB = headB;
-        while(currA!=NULL){cnt1++;currA=currA->next;}
-        while(currB!=NULL){cnt2++;currB=currB->next;}
-        currA = headA; currB=headB;
-        if(cnt1>=cnt2)
-        {
-            for(int i=0; i<abs(cnt1-cnt2); i++)
-                currA=currA->next;
-        }
-        else
-        {
-            for(int i=0; i<abs(cnt2-cnt1); i++)
-                currB = currB->next;
-        }
-            while(currA!=NULL && currB!=NULL)
-            {
-                if(currA == currB)
-                    return currA;
-                currA=currA->next;
-                currB=currB->next;
+        ListNode *l1 = headA, *l2 = headB;
+        int cnt1 = 0, cnt2 = 0;
+        while(l1)
+            l1 = l1->next, cnt1++;
+        while(l2)
+            l2 = l2->next, cnt2++;
+        if(cnt1>cnt2){
+            l1 = headA, l2 = headB;
+            int k = cnt1-cnt2;
+            while(l1 and k--){
+                l1 = l1->next;
             }
-            return NULL;        
-        
+            while(l1!=l2)
+                l1 = l1->next, l2 = l2->next;
+            return l1;
+        }
+        else{
+            l1 = headA, l2 = headB;
+            int k = cnt2-cnt1;
+            while(l2 and k--){
+                l2 = l2->next;
+            }
+            while(l1!=l2)
+                l1 = l1->next, l2 = l2->next;
+            return l1;
+        }
+        return NULL;
     }
 };
