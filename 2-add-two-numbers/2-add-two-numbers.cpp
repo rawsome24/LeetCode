@@ -11,61 +11,52 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode *ptr1=l1,*ptr2=l2;
-        int cnt1=0,cnt2=0,carry=0;
-        while(ptr1){cnt1++;ptr1=ptr1->next;}
-        while(ptr2){cnt2++; ptr2=ptr2->next;}
-        ptr1=l1; ptr2=l2;
-        if(cnt1!=cnt2)
-        {
-            if(cnt1>cnt2)
-            {
-                while(ptr2->next)
-                    ptr2=ptr2->next;
-                while(cnt1-cnt2)
-                {
-                    ListNode *zero = new ListNode(0);
-                    ptr2->next = zero;
-                    ptr2 = zero;
-                    cnt2++;
-                }
-            }
-            else
-            {
-                while(ptr1->next)
-                    ptr1=ptr1->next;
-                while(cnt2-cnt1)
-                {
-                    ListNode *zero = new ListNode(0);
-                    ptr1->next = zero;
-                    ptr1 = zero;
-                    cnt1++;
-                }
-            }
-        }
-        ptr1=l1; ptr2=l2;
-        if(cnt1==cnt2)
-        {
-            while(ptr1)
-            {
-                int sum = ptr1->val+ptr2->val;
-                if(carry>0)sum+=carry;
-                carry = sum>=10?sum/10:0;
-                ptr1->val = sum%10;
-                ptr1=ptr1->next;
-                ptr2 = ptr2->next;
-            }
-            if(carry)
-            {
-                ListNode *last = new ListNode(carry);
-                ptr1 = l1;
-                while(ptr1->next)
-                    ptr1=ptr1->next;
-                ptr1->next = last;
-            }
+        if(l1==nullptr)
+            return l2;
+        if(l2==nullptr)
             return l1;
+        ListNode *head1 = l1, *head2 = l2;
+        int carry = 0;
+        ListNode *head = NULL, *tail = NULL;
+        while(head1 and head2){
+            cout<<carry<<endl;
+            int value = (head1->val+head2->val+carry)%10;
+            carry = (head1->val+head2->val+carry)/10;
+            if(head==nullptr){
+                ListNode *temp = new ListNode (value);
+                head = temp;
+                tail = temp;
+            }
+            else{
+                ListNode *temp = new ListNode (value);
+                tail->next = temp;
+                tail = tail->next;
+            }
+            head1 = head1->next;
+            head2 = head2->next;
+            
         }
-        return l1;
-        
+        while(head1){
+            int value = (head1->val+carry)%10;
+            carry = (head1->val+carry)/10;
+            ListNode *temp = new ListNode (value);
+            tail->next = temp;
+            tail = tail->next;
+            head1 = head1->next;
+        }
+        while(head2){
+            int value = (head2->val+carry)%10;
+            carry = (head2->val+carry)/10;
+            ListNode *temp = new ListNode (value);
+            tail->next = temp;
+            tail = tail->next;
+            head2 = head2->next;
+        }
+        if(carry){
+            ListNode *temp = new ListNode (carry);
+            tail->next = temp;
+            tail = tail->next;
+        }
+        return head;
     }
 };
