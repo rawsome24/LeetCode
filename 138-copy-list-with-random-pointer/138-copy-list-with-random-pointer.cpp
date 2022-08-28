@@ -17,27 +17,28 @@ public:
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        unordered_map<Node*, Node*>mp;
-        Node *ans = new Node (-1);
-        Node *trav = ans;
-        Node *curr = head;
+        unordered_map<Node *, Node *>mp;
+        Node *newHead = NULL , *trav = NULL, *curr = head;
         while(curr){
-            if(mp.find(curr)==mp.end()){
-                Node *tmp = new Node (curr->val);
-                mp[curr] = tmp;
+            Node *temp = new Node(curr->val);
+            if(newHead==NULL){
+                newHead = temp;
+                trav = temp;
             }
-            trav->next = mp[curr];
-            trav = trav->next;
-            
-            if(curr->random!=NULL){
-                if(mp.find(curr->random)==mp.end()){
-                    Node *temp = new Node(curr->random->val);
-                    mp[curr->random] = temp;
-                }
-                trav->random = mp[curr->random];
+            else{
+                trav->next = temp;
+                trav = trav->next;
             }
+            mp[curr] = temp;
             curr = curr->next;
         }
-        return ans->next;
+        Node *fakeCurr=newHead;
+        curr = head;
+        while(curr){
+            fakeCurr->random = mp[curr->random];
+            curr = curr->next;
+            fakeCurr = fakeCurr->next;
+        }
+        return newHead;
     }
 };
