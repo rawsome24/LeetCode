@@ -5,11 +5,11 @@ public:
         for(int i=1; i<=n; i++){
             v.push_back(i);
         }
-        while(k-1){
+        k--;
+        while(k--){
             next_permutation(v.begin(), v.end());
-            k--;
         }
-        string ans = "";
+        string ans;
         for(auto it:v){
             ans.push_back(it+'0');
         }
