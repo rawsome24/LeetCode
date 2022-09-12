@@ -11,37 +11,37 @@
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
-        ListNode *os = NULL, *oe = NULL, *es = NULL, *ee=NULL;
-        int i=1;
-        for(auto *curr=head; curr!=NULL; curr=curr->next){
-            if(i%2){
-                if(os==NULL){
-                    ListNode *temp = new ListNode(curr->val);
-                    os=temp;
-                    oe=os;
-                }
-                else{
-                    oe->next = curr;
-                    oe = oe->next;
-                }
-            }
-            else{
+        ListNode *os = NULL, *oe = NULL, *es = NULL, *ee = NULL;
+        ListNode *curr = head;
+        int i = 0;
+        while(curr){
+            ListNode *temp = new ListNode (curr->val);
+            if(i%2==0){
                 if(es==NULL){
-                    ListNode *temp = new ListNode(curr->val);
-                    es=temp;
-                    ee=es;
+                    es = temp;
+                    ee = es;
                 }
                 else{
-                    ee->next = curr;
+                    ee->next = temp;
                     ee = ee->next;
                 }
             }
+            else{
+                if(os == NULL){
+                    os = temp;
+                    oe = os;
+                }
+                else{
+                    oe->next = temp;
+                    oe = oe->next;
+                }
+            }
             i++;
+            curr = curr->next;
         }
-        if(es==NULL or os==NULL)
+        if(os==NULL or es==NULL)
             return head;
-        oe->next = es;
-        ee->next=NULL;
-        return os;
+        ee->next = os;
+        return es;
     }
 };
