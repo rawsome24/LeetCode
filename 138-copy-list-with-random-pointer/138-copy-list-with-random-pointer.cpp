@@ -18,12 +18,13 @@ class Solution {
 public:
     Node* copyRandomList(Node* head) {
         unordered_map<Node *, Node *>mp;
-        Node *newHead = NULL , *trav = NULL, *curr = head;
+        Node *curr = head, *trav=NULL;
+        Node *newHead = NULL;
         while(curr){
-            Node *temp = new Node(curr->val);
+            Node *temp = new Node (curr->val);
             if(newHead==NULL){
                 newHead = temp;
-                trav = temp;
+                trav = newHead;
             }
             else{
                 trav->next = temp;
@@ -32,12 +33,12 @@ public:
             mp[curr] = temp;
             curr = curr->next;
         }
-        Node *fakeCurr=newHead;
-        curr = head;
+        curr = newHead;
+        Node *temp = head;
         while(curr){
-            fakeCurr->random = mp[curr->random];
+            curr->random = mp[temp->random];
             curr = curr->next;
-            fakeCurr = fakeCurr->next;
+            temp = temp->next;
         }
         return newHead;
     }
